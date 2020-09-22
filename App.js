@@ -1,21 +1,51 @@
-import { StatusBar } from 'expo-status-bar';
+
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Button, Text, View,AsyncStorage } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import HomeScreen from './components/HomeScreen';
+import TestScreen from './components/TestScreen';
+// import SaveDataScreen from './components/SaveDataScreen';
+import InvoiceEditScreen from './components/InvoiceEditScreen';
+import SummaryScreen from './components/SummaryScreen';
+import FormScreen from './components/FormScreen';
+import ContactScreen from './components/ContactScreen';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+import * as Font from "expo-font";
+// import { Ionicons } from "@expo/vecton-icons";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const RootStack = createStackNavigator(
+  {
+    Home: HomeScreen,
+    Test: TestScreen,
+    Contact: ContactScreen,
+    Form: FormScreen,
+    InvoiceEdit:InvoiceEditScreen,
+    Summary: SummaryScreen,
   },
-});
+  {
+    initialRouteName: 'Home',
+  }
+);
+
+const AppContainer = createAppContainer(RootStack);
+
+export default class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      isReady : false
+    };
+  }
+  // async componentDidMount(){
+  //   await Font.loadAsync({
+  //     Roboto: require(),
+  //     Roboto_medium : require(),
+  //     ...Ionicons.font
+  //   });
+  //   this.setState({isReady:true});
+  // }
+  render() {
+    return <AppContainer />;
+  }
+}
